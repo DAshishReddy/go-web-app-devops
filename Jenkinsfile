@@ -5,7 +5,7 @@ pipeline {
         APP_NAME       = "my-app"
         DOCKER_IMAGE   = "dockerhubusername/my-app"
         SONARQUBE_ENV  = "sonarqube"
-        GIT_REPO       = "github.com/your-org/your-repo.git"
+        GIT_REPO       = "github.com/DAshishReddy/go-web-app-devops.git"
         GIT_BRANCH    = "main"
     }
 
