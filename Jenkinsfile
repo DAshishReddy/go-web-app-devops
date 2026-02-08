@@ -24,16 +24,19 @@ pipeline {
                 SONAR_TOKEN = credentials('sonar-token')
             }
             steps {
-                withSonarQubeEnv('sonarqube') {
-                    sh '''
-                      sonar-scanner \
-                      -Dsonar.projectKey=jenkins-sonar-docker \
-                      -Dsonar.sources=. \
-                      -Dsonar.login=$SONAR_TOKEN
-                    '''
-                }
+        withSonarQubeEnv('sonarqube') {
+            script {
+                def scannerHome = tool 'sonar-scanner'
+                sh '''
+                  ''' + scannerHome + '''/bin/sonar-scanner \
+                  -Dsonar.projectKey=jenkins-sonar-docker \
+                  -Dsonar.sources=. \
+                  -Dsonar.login=$SONAR_TOKEN
+                '''
             }
         }
+    }
+}
 
       /* stage('Quality Gate') {
             steps {
