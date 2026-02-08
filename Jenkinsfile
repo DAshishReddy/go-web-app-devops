@@ -2,9 +2,7 @@ pipeline {
     agent any
 
     environment {
-       // APP_NAME       = "jenkins-sonar-docker"
         DOCKER_IMAGE   = "ashish2999/go-web-app"
-       // SONARQUBE_ENV  = "sonarqube"
         GIT_REPO       = "github.com/DAshishReddy/go-web-app-devops.git"
         GIT_BRANCH    = "main"
     }
@@ -37,15 +35,6 @@ pipeline {
         }
     }
 }
-
-      /* stage('Quality Gate') {
-            steps {
-                timeout(time: 2, unit: 'MINUTES') {
-                    waitForQualityGate abortPipeline: true
-                }
-            }
-        } */
-
         stage('Build Docker Image') {
             steps {
                 sh '''
