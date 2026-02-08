@@ -2,9 +2,9 @@ pipeline {
     agent any
 
     environment {
-        APP_NAME       = "jenkins-sonar-docker"
+       // APP_NAME       = "jenkins-sonar-docker"
         DOCKER_IMAGE   = "ashish2999/go-web-app"
-        SONARQUBE_ENV  = "sonarqube"
+       // SONARQUBE_ENV  = "sonarqube"
         GIT_REPO       = "github.com/DAshishReddy/go-web-app-devops.git"
         GIT_BRANCH    = "main"
     }
@@ -24,10 +24,10 @@ pipeline {
                 SONAR_TOKEN = credentials('sonar-token')
             }
             steps {
-                withSonarQubeEnv("${SONARQUBE_ENV}") {
+                withSonarQubeEnv('sonarqube') {
                     sh """
                       sonar-scanner \
-                      -Dsonar.projectKey=${APP_NAME} \
+                      -Dsonar.projectKey=jenkins-sonar-docker \
                       -Dsonar.sources=. \
                       -Dsonar.login=$SONAR_TOKEN
                     """
