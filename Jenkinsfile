@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        APP_NAME       = "my-app"
+        APP_NAME       = "jenkins-sonar-docker"
         DOCKER_IMAGE   = "ashish2999/my-app"
         SONARQUBE_ENV  = "sonarqube"
         GIT_REPO       = "github.com/DAshishReddy/go-web-app-devops.git"
