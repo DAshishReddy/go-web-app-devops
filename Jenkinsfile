@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         APP_NAME       = "jenkins-sonar-docker"
-        DOCKER_IMAGE   = "ashish2999/my-app"
+        DOCKER_IMAGE   = "ashish2999/go-web-app"
         SONARQUBE_ENV  = "sonarqube"
         GIT_REPO       = "github.com/DAshishReddy/go-web-app-devops.git"
         GIT_BRANCH    = "main"
