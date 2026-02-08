@@ -25,12 +25,12 @@ pipeline {
             }
             steps {
                 withSonarQubeEnv('sonarqube') {
-                    sh """
+                    sh '''
                       sonar-scanner \
                       -Dsonar.projectKey=jenkins-sonar-docker \
                       -Dsonar.sources=. \
                       -Dsonar.login=$SONAR_TOKEN
-                    """
+                    '''
                 }
             }
         }
@@ -45,9 +45,9 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh """
+                sh '''
                   docker build -t ${DOCKER_IMAGE}:${BUILD_NUMBER} .
-                """
+                '''
             }
         }
 
@@ -56,18 +56,18 @@ pipeline {
                 DOCKER_CREDS = credentials('dockerhub-creds')
             }
             steps {
-                sh """
+                sh '''
                   echo $DOCKER_CREDS_PSW | docker login -u $DOCKER_CREDS_USR --password-stdin
                   docker push ${DOCKER_IMAGE}:${BUILD_NUMBER}
-                """
+                '''
             }
         }
 
         stage('Update Image Tag in K8s Manifest') {
             steps {
-                sh """
+                sh '''
                   sed -i 's|image: .*|image: ${DOCKER_IMAGE}:${BUILD_NUMBER}|' go-web-app-devops/blob/main/k8s/manifests/deployment.yaml
-                """
+                '''
             }
         }
 
@@ -76,7 +76,7 @@ pipeline {
                 GIT_CREDS = credentials('github-creds')
             }
             steps {
-                sh """
+                sh '''
                   git config user.email "ashishreddy.dulla@gmail.com"
                   git config user.name "Ashish"
 
@@ -84,7 +84,7 @@ pipeline {
                   git commit -m "Update image tag to ${BUILD_NUMBER}"
                   
                   git push https://${GIT_CREDS_USR}:${GIT_CREDS_PSW}@${GIT_REPO} ${GIT_BRANCH}
-                """
+                '''
             }
         }
     }
