@@ -81,7 +81,7 @@ pipeline {
             steps {
                 sh '''
                   git config user.email "ashishreddy.dulla@gmail.com"
-                  git config user.name "Ashish"
+                  git config user.name "DAshishReddy"
 
                   git add k8s/manifests/deployment.yaml
                   git commit -m "Update image tag to ${BUILD_NUMBER}"
