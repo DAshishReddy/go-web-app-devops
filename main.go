@@ -21,7 +21,7 @@ func aboutPage(w http.ResponseWriter, r *http.Request) {
 }
 
 func contactPage(w http.ResponseWriter, r *http.Request) {
-	// Render the contact html page
+	// Render the contact html pages
 	http.ServeFile(w, r, "static/contact.html")
 }
 
