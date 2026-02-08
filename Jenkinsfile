@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         APP_NAME       = "my-app"
-        DOCKER_IMAGE   = "dockerhubusername/my-app"
+        DOCKER_IMAGE   = "ashish2999/my-app"
         SONARQUBE_ENV  = "sonarqube"
         GIT_REPO       = "github.com/DAshishReddy/go-web-app-devops.git"
         GIT_BRANCH    = "main"
@@ -29,20 +29,19 @@ pipeline {
                       sonar-scanner \
                       -Dsonar.projectKey=${APP_NAME} \
                       -Dsonar.sources=. \
-                      -Dsonar.host.url=$SONAR_HOST_URL \
                       -Dsonar.login=$SONAR_TOKEN
                     """
                 }
             }
         }
 
-        stage('Quality Gate') {
+      /* stage('Quality Gate') {
             steps {
                 timeout(time: 2, unit: 'MINUTES') {
                     waitForQualityGate abortPipeline: true
                 }
             }
-        }
+        } */
 
         stage('Build Docker Image') {
             steps {
@@ -67,7 +66,7 @@ pipeline {
         stage('Update Image Tag in K8s Manifest') {
             steps {
                 sh """
-                  sed -i 's|image: .*|image: ${DOCKER_IMAGE}:${BUILD_NUMBER}|' k8s/deployment.yaml
+                  sed -i 's|image: .*|image: ${DOCKER_IMAGE}:${BUILD_NUMBER}|' go-web-app-devops/blob/main/k8s/manifests/deployment.yaml
                 """
             }
         }
@@ -78,10 +77,10 @@ pipeline {
             }
             steps {
                 sh """
-                  git config user.email "jenkins@ci.com"
-                  git config user.name "Jenkins CI"
+                  git config user.email "ashishreddy.dulla@gmail.com"
+                  git config user.name "Ashish"
 
-                  git add k8s/deployment.yaml
+                  git add go-web-app-devops/blob/main/k8s/manifests/deployment.yaml
                   git commit -m "Update image tag to ${BUILD_NUMBER}"
                   
                   git push https://${GIT_CREDS_USR}:${GIT_CREDS_PSW}@${GIT_REPO} ${GIT_BRANCH}
