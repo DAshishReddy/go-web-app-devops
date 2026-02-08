@@ -69,7 +69,7 @@ pipeline {
         stage('Update Image Tag in K8s Manifest') {
             steps {
                 sh '''
-                  sed -i 's|image: .*|image: ${DOCKER_IMAGE}:${BUILD_NUMBER}|' go-web-app-devops/k8s/manifests/deployment.yaml
+                  sed -i 's|image: .*|image: ${DOCKER_IMAGE}:${BUILD_NUMBER}|' k8s/manifests/deployment.yaml
                 '''
             }
         }
@@ -83,7 +83,7 @@ pipeline {
                   git config user.email "ashishreddy.dulla@gmail.com"
                   git config user.name "Ashish"
 
-                  git add go-web-app-devops/k8s/manifests/deployment.yaml
+                  git add k8s/manifests/deployment.yaml
                   git commit -m "Update image tag to ${BUILD_NUMBER}"
                   
                   git push https://${GIT_CREDS_USR}:${GIT_CREDS_PSW}@${GIT_REPO} ${GIT_BRANCH}
