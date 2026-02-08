@@ -69,7 +69,7 @@ pipeline {
         stage('Update Image Tag in K8s Manifest') {
             steps {
                 sh '''
-                  sed -i 's|image: .*|image: ${DOCKER_IMAGE}:${BUILD_NUMBER}|' k8s/manifests/deployment.yaml
+                  sed -i "s|image: .*|image: '"${DOCKER_IMAGE}:${BUILD_NUMBER}"'|" k8s/manifests/deployment.yaml
                 '''
             }
         }
